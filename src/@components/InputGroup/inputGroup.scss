@@ -5,29 +5,27 @@
     max-width: 100%;
     width: 100%;
     position: relative;
-
     input, select, button { // TODO: select, button
         display: inline-block;
         width: auto;
         box-sizing: border-box;
     }
-
-    input:first-child {
+    span:first-child input {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
     }
-
-    input:last-child {
+    span:last-child input {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
         margin-left: -1px;
     }
 }
-
-.nw-input-group.compact div input:not(:first-child):not(:last-child) {
+.nw-input-group.compact span:not(:first-child):not(:last-child) input {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+.nw-input-group.compact span {
     margin-left: -1px;
 }
