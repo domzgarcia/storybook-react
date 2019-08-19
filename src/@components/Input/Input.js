@@ -19,14 +19,10 @@ const Input = (props) => {
 	)
 };
 
-const resolveBlock = (isBlock) => {
-	const emptyClass = '';
-	if(isBlock) return '-block';
-	return emptyClass;
-}
 
 const generateClassName = ({ className, align, settings}) => {
-	
+	// TODO: inject here tomorrow
+
 	const nativeClasses = (className) ? className : '';
 	let ownClasses = ['nw-input', 
 	...alignment(align),
@@ -73,6 +69,11 @@ const addOnClasses = (settings) => {
 const alignment = (align) => {
 	if(align) return [`align-${align}`];
 	return [];
+}
+const resolveBlock = (isBlock) => {
+	const emptyClass = '';
+	if(isBlock) return '-block';
+	return emptyClass;
 }
 
 Input.propTypes = {
