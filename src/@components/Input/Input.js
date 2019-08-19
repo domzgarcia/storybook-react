@@ -7,16 +7,23 @@ const Input = (props) => (
 );
 
 const generateClassName = ({ className, block, align }) => {
-	let ownClassName = ['nw-input', ...resolveAlignment(align)];
-	ownClassName = (block) ? [...ownClassName,'block'] : [...ownClassName];
-	ownClassName = ownClassName.join(" ");
-	return `${ownClassName} ${className}`;
+	const nativeClasses = (className) ? className : '';
+	let ownClasses = ['nw-input', 
+	...alignment(align),
+	...isBlock(block),
+	];
+	ownClasses = ownClasses.join(" ");
+	return `${ownClasses} ${nativeClasses}`;
 };
 
-const resolveAlignment = (align) => {
-	let list = [];
-	if(align) list.push(`align-${align}`);
-	return list;
+const isBlock = (block) => {
+	if(block) return ['block'];
+	return [];
+}
+
+const alignment = (align) => {
+	if(align) return [`align-${align}`];
+	return [];
 }
 
 Input.propTypes = {

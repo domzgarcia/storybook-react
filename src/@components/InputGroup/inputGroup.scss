@@ -1,0 +1,33 @@
+.nw-input-group {
+    margin-bottom: 10px;
+}
+.nw-input-group.compact {
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+
+    input, select, button { // TODO: select, button
+        display: inline-block;
+        width: auto;
+        box-sizing: border-box;
+    }
+
+    input:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    input:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        margin-left: -1px;
+    }
+}
+
+.nw-input-group.compact div input:not(:first-child):not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -1px;
+}
