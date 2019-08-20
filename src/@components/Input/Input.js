@@ -3,26 +3,25 @@ import PropTypes from 'prop-types';
 import './input.scss';
 
 const Input = (props) => {
-	const {html, settings} = resolveAddOn(props);
-	const extendedProps = Object.assign({}, props);
-	extendedProps.settings = settings;
-	
-	delete extendedProps.addOnBefore;
-	delete extendedProps.addOnAfter;
-	
+	const {html, settings} = addOnsBuilder(props);
+	const customProps = Object.assign({}, props);
+	cleanAttributes(customProps);
 	return(
-		<span className={`input-wrap ${resolveBlock(props.block)}`}>
+		<span className={`input-wrap ${withBlock(props.block)}`}>
 			{html}
-			<input {...extendedProps} type="text"
-			className={generateClassName(extendedProps)} />
+			<input {...customProps} type="text"
+			className={classBuilder(customProps, { opts: { 
+				addOns: settings, }})} />
 		</span>
 	)
 };
-
-
-const generateClassName = ({ className, align, settings}) => {
-	// TODO: inject here tomorrow
-
+const cleanAttributes = (customProps) => {
+	delete customProps.addOnBefore;
+	delete customProps.addOnAfter;
+	delete customProps.block;
+};
+const classBuilder = ({className, align}, {opts}) => {
+	const settings = opts.addOns;
 	const nativeClasses = (className) ? className : '';
 	let ownClasses = ['nw-input', 
 	...alignment(align),
@@ -31,17 +30,21 @@ const generateClassName = ({ className, align, settings}) => {
 	ownClasses = ownClasses.join(" ");
 	return `${ownClasses} ${nativeClasses}`;
 };
-
-const resolveAddOn = ({addOnBefore, addOnAfter}) => {
+const addOnsBuilder = ({addOnBefore, addOnAfter}) => {
 	let html = <React.Fragment/>;
-	const exists 	= (addOnBefore) ? true : (addOnAfter) ? true : false;
-	const position 	= (addOnBefore) ? 'before' : (addOnAfter) ? 'after' : '';
-	let children 	= (addOnBefore) 
-					? addOnBefore.props.children
-					: (addOnAfter) 
-						? addOnAfter.props.children 
-						: <React.Fragment />;
-
+	let exists, position, children;
+	switch(true){
+		case addOnBefore !== undefined:
+			exists = true; position = 'before';
+			children = addOnBefore.props.children;
+		break;
+		case addOnAfter !== undefined:
+			exists = true; position = 'after';
+			children = addOnAfter.props.children;
+		break;
+		default: 
+		break;
+	};
 	if(addOnBefore || addOnAfter){
 		html = (
 		<div className={`nw-addon -${position}`}>
@@ -53,34 +56,35 @@ const resolveAddOn = ({addOnBefore, addOnAfter}) => {
 		settings: {
 			exists,
 			position,
-		}
+		},
 	};
-}
-
-/////////////////
-// Add Classes
-/////////////////
+};
+/*|--------------
+  | Add Classes
+  |-------------- */
 const addOnClasses = (settings) => {
-	if(settings.exists) {
-		return [`-${settings.position}-adjust-padding`];
-	}
-	return [];
+	const classes = [];
+	if(settings.exists) return [`-${settings.position}-adjust-padding`];
+	return classes;
 }
 const alignment = (align) => {
-	if(align) return [`align-${align}`];
-	return [];
+	const classes = [];
+	if(align) return [`-align-${align}`];
+	return classes;
 }
-const resolveBlock = (isBlock) => {
-	const emptyClass = '';
+const withBlock = (isBlock) => {
+	const classes = '';
 	if(isBlock) return '-block';
-	return emptyClass;
+	return classes;
 }
-
+/*|--------------
+  | Proptypes
+  |-------------- */
 Input.propTypes = {
 	align: PropTypes.string,
 	block: PropTypes.bool,
 	addOnBefore: PropTypes.object,
 	addOnAfter:  PropTypes.object,
-}
+};
 
 export default Input;

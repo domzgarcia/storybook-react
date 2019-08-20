@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import {Input, InputGroup} from '../../src/@components';
 import '../styles/global.css';
@@ -18,6 +18,9 @@ storiesOf('Input Text', module)
     .add('with custom class', () => (
         <Input className="red bordered" align="center" defaultValue="Domz Garcia" />
     ))
+    .add('with style object', () => (
+        <Input style={{boxShadow: 'inset 3px 3px 5px 6px #eee'}} defaultValue="Domz Garcia" />
+    ))
     .add('with property block', () => (
         <Input block defaultValue="Domz Garcia" />
     ))
@@ -34,7 +37,7 @@ storiesOf('Input Text', module)
         </div>
     ), {info: "[NOTICE] Use any Grid system you like to align label and input. The example provided above use Bootstrap Grid." })
 
-storiesOf('Addon', module)
+storiesOf('Input AddOn', module)
     .add('with addon before', () => (
         <Input placeholder="Email address"
             addOnBefore={<div role="img">
@@ -49,30 +52,14 @@ storiesOf('Addon', module)
             </div>}
         />
     ))
-    .add('with addon before, after and block', () => (
-        <div>
-            <Input placeholder="First Name" block
-                addOnBefore={<div>
-                    <span role="img">😊</span>
-                </div>}
-            />
-            <br />
-            <Input placeholder="Family Name" block
-                addOnAfter={<div role="img">
-                    <span>😊</span>
-                </div>}
-            />
-        </div>
-    ))
 
 storiesOf('InputGroup', module)
-    // .addDecorator(children => <InputGroup compact>{children()}</InputGroup>)
     .add('none compact', () => {
         return (
-        <div>
-            <Input defaultValue="Domz Garcia" />&nbsp;&nbsp;
+        <InputGroup>
             <Input defaultValue="Domz Garcia" />
-        </div>)
+            <Input defaultValue="Domz Garcia" />
+        </InputGroup>)
     })
     .add('with property compact', () => {
         return (
@@ -87,8 +74,7 @@ storiesOf('InputGroup', module)
         <InputGroup compact>
             <Input defaultValue="John " />
             <Input defaultValue="Dello" />
-            <Input defaultValue="Smith" />
             <Input defaultValue="Bella" />
-            <Input defaultValue="Chou" />
         </InputGroup>)
     })
+
