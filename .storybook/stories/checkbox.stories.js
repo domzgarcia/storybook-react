@@ -4,6 +4,9 @@ import {Checkbox} from '../../src/@components';
 import '../styles/mini-grid-system.css';
 
 storiesOf('Input checkbox', module)
+    .add('No text', () => (
+        <Checkbox />
+    ))
     .add('default color', () => (
         <Checkbox>Default color</Checkbox>
     ))
@@ -17,7 +20,7 @@ storiesOf('Input checkbox', module)
         </div>
     ))
     .add('with attribute name', () => (
-        <Checkbox name="fullName">Ervinne Sodusta</Checkbox>
+        <Checkbox name="fullName">Domz Garcia</Checkbox>
     ))
     .add('with all colors', () => (
         <div className="container -story-frame">

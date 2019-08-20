@@ -46,6 +46,7 @@ class Checkbox extends Component {
     render(){
         const {isChecked, colorType, customProps, isDisabled} = this.state;
         const {children} = this.props;
+        const empty = '';
         return (
             <Fragment>
             <label className={`nw-checkbox-wrapper ${((isDisabled) ? '-disabled' : '')} `} >
@@ -59,7 +60,9 @@ class Checkbox extends Component {
                     />
                     <span className={`${colorType} nw-checkbox-inner ${((isChecked) ? '-checked' : '')} `}></span>
                 </span>
-                <span>{children}</span>
+                {(children)
+                ? <span>{children}</span>
+                : empty}
             </label>
             </Fragment>
         )
