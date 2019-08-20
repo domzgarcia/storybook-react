@@ -12,7 +12,7 @@ storiesOf('Input Text', module)
     .add('with placeholder', () => (
         <Input placeholder="Input your name" />
     ))
-    .add('with property align', () => (
+    .add('with attribute align', () => (
         <Input align="right" defaultValue="Domz Garcia" />
     ))
     .add('with custom class', () => (
@@ -21,7 +21,7 @@ storiesOf('Input Text', module)
     .add('with style object', () => (
         <Input style={{boxShadow: 'inset 3px 3px 5px 6px #eee'}} defaultValue="Domz Garcia" />
     ))
-    .add('with property block', () => (
+    .add('with attribute block', () => (
         <Input block defaultValue="Domz Garcia" />
     ))
     .add('with label', () => (
@@ -38,14 +38,14 @@ storiesOf('Input Text', module)
     ), {info: "[NOTICE] Use any Grid system you like to align label and input. The example provided above uses Bootstrap Grid." })
 
 storiesOf('Input AddOn', module)
-    .add('with addon before', () => (
+    .add('with attribute addOnBefore', () => (
         <Input placeholder="Email address"
             addOnBefore={<div role="img">
                 <span >😊</span>
             </div>}
         />
     ))
-    .add('with addon after', () => (
+    .add('with attribute addOnAfter', () => (
         <Input placeholder="Email address"
             addOnAfter={<div>
                 <span role="img">😊</span>
@@ -61,7 +61,7 @@ storiesOf('InputGroup', module)
             <Input defaultValue="Domz Garcia" />
         </InputGroup>)
     })
-    .add('with property compact', () => {
+    .add('with attribute compact', () => {
         return (
             <InputGroup compact>  
                 <Input defaultValue="Domz Garcia" />
@@ -69,7 +69,7 @@ storiesOf('InputGroup', module)
             </InputGroup>
         )
     })
-    .add('with property compact on more than 2 elements', () => {
+    .add('with attribute compact on more than 2 elements', () => {
         return (
         <InputGroup compact>
             <Input defaultValue="John " />
