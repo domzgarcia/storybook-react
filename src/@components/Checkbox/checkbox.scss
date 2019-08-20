@@ -28,6 +28,7 @@
         outline: none;
         cursor: pointer;
     }
+
     .nw-checkbox-input /*<input type="checkbox">*/ {
         box-sizing: border-box;
         padding: 0;
@@ -115,6 +116,7 @@
         padding-right: 8px;
     }
 }
+
 .nw-checkbox-wrapper:hover,
 .nw-checkbox-wrapper:active,
 .nw-checkbox-wrapper:visited,
@@ -130,5 +132,21 @@
     }
     .danger .nw-checkbox-inner {
         border: 1px solid $danger-color;
+    }
+}
+
+.nw-checkbox-wrapper.-disabled,
+.nw-checkbox-wrapper.-disabled:hover {
+    color: #dcdcdc;
+    cursor: not-allowed;
+    .primary .nw-checkbox-inner,
+    .warning .nw-checkbox-inner,
+    .success .nw-checkbox-inner,
+    .danger  .nw-checkbox-inner {
+        border: 1px solid #efefef;
+        cursor: not-allowed;
+    }
+    input[type='checkbox'] {
+        cursor: not-allowed;
     }
 }
