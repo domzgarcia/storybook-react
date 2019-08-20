@@ -25,10 +25,10 @@ storiesOf('Input checkbox', module)
     .add('with all colors', () => (
         <div className="container -story-frame">
         <div className="row">
-            <div className="col"><Checkbox type="primary">Chicken</Checkbox></div>
-            <div className="col"><Checkbox type="warning">Pork</Checkbox></div>
-            <div className="col"><Checkbox type="success">Vegetable</Checkbox></div>
-            <div className="col"><Checkbox type="danger">Water</Checkbox></div>
+            <div className="col"><Checkbox checked type="primary">Chicken</Checkbox></div>
+            <div className="col"><Checkbox checked type="warning">Pork</Checkbox></div>
+            <div className="col"><Checkbox checked type="success">Vegetable</Checkbox></div>
+            <div className="col"><Checkbox checked type="danger">Water</Checkbox></div>
         </div>
         </div>
     ))

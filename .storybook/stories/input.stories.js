@@ -35,7 +35,7 @@ storiesOf('Input Text', module)
                 </div>
             </div>
         </div>
-    ), {info: "[NOTICE] Use any Grid system you like to align label and input. The example provided above use Bootstrap Grid." })
+    ), {info: "[NOTICE] Use any Grid system you like to align label and input. The example provided above uses Bootstrap Grid." })
 
 storiesOf('Input AddOn', module)
     .add('with addon before', () => (
