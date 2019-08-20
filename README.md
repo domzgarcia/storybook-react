@@ -1,5 +1,5 @@
 Instructions
 ---
 <pre>
-npm i && npm run start
+npm i && npm run storybook
 </pre>
