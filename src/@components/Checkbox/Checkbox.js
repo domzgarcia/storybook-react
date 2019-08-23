@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './checkbox.scss';
 
@@ -53,13 +53,13 @@ class Checkbox extends Component {
             isChecked: !this.state.isChecked,
         });
     }
-    
+
     render(){
         const {isChecked, colorType, customProps, isDisabled} = this.state;
         const {children} = this.props;
         const empty = '';
         return (
-            <Fragment>
+            <div>
             <label className={`nw-checkbox-wrapper ${((isDisabled) ? '-disabled' : '')} `} >
                 <span className={`${colorType} nw-checkbox ${((isChecked) ? '-checked' : '')} `}>
                     <input {...customProps}
@@ -75,7 +75,7 @@ class Checkbox extends Component {
                 ? <span>{children}</span>
                 : empty}
             </label>
-            </Fragment>
+            </div>
         )
     }
 }
