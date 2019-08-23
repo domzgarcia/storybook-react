@@ -3,14 +3,25 @@ import PropTypes from 'prop-types';
 import './checkbox.scss';
 
 class Checkbox extends Component {
-    state = {
-        isChecked: false,
-        isDisabled: false,
-        inputValue: false,
-        newColor: '',
-        colorType: 'primary',
-        customProps: {},
-    };
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            isChecked: false,
+            isDisabled: false,
+            inputValue: false,
+            newColor: '',
+            colorType: 'primary',
+            customProps: {},
+        };
+
+        this.cleanAttributes = this.cleanAttributes.bind(this);
+        this.setDefault = this.setDefault.bind(this);
+        this.resolveType = this.resolveType.bind(this);
+        this.handleChecked = this.handleChecked.bind(this);
+    }
+    
     
     componentDidMount(){
         this.resolveType();
@@ -18,7 +29,7 @@ class Checkbox extends Component {
         this.cleanAttributes();
     }
     
-    cleanAttributes = () => {
+    cleanAttributes() {
         const properties = Object.assign({}, this.props);
         delete properties.children;
         delete properties.checked;
@@ -26,23 +37,23 @@ class Checkbox extends Component {
         this.setState({customProps: properties});
     }
 
-    setDefault = () => {
+    setDefault() {
         const {checked, disabled} = this.props;
         if(checked) this.setState({isChecked: checked});
         if(disabled) this.setState({isDisabled: disabled});
     }
 
-    resolveType = () => {
+    resolveType() {
         const {type} = this.props;
         if(type) this.setState({colorType: type});
     }
 
-    handleChecked = () => {
+    handleChecked() {
         this.setState({
             isChecked: !this.state.isChecked,
         });
     }
-
+    
     render(){
         const {isChecked, colorType, customProps, isDisabled} = this.state;
         const {children} = this.props;
