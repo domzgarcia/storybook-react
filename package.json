@@ -1,7 +1,23 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
-  "private": true,
+  "name": "nuworks-ui-library",
+  "version": "1.0.0",
+  "description": "NUWORKS product team UI Library.",
+  "main": "index.js",
+  "keywords": [
+	"ui-library",
+	"react"
+  ],
+  "author": "Nuworks Product Team <productdev@nuworks.ph>",
+  "contributors": [
+    {"name": "Domz Garcia", "email": "domgarcia.fp@gmail.com"},
+    {"name": "Ervinne Sodusta", "email": "ervinne.sodusta@nuworks.ph"}
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git", 
+    "url": "https://github.com/domzgarcia/storybook-react"
+  },
+
   "dependencies": {
     "connected-react-router": "^6.5.2",
     "history": "^4.9.0",
