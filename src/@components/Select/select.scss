@@ -3,6 +3,7 @@ $optionGutter: 1px;
 
 .select-wrap select, 
 .select-wrap input {
+
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin: 0;
@@ -86,6 +87,16 @@ $optionGutter: 1px;
         left: 0;
     }
 }
+.select-wrap:after {
+    border-left: 1px solid #d9d9d9;
+    height: 24px; 
+    width: 30px;
+    z-index: 2;
+    position: absolute;
+    top: 4px;
+    right:0;
+    content: '';
+}
 .select-wrap.-switched {
     > select { display: none; };
     > .select-input { display: block; };
@@ -131,6 +142,7 @@ $optionGutter: 1px;
 .select-wrap {
     position: relative;
     display: inline-block;
+    cursor: pointer;
 }
 .select-wrap.-block {
     display: block;

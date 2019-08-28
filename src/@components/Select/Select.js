@@ -147,6 +147,7 @@ class Select extends Component {
                     TODO: OptionGroup
                     TODO: Normal select
                     TODO: Like Tag
+                    TODO: Icon in Text
                 */}
                 <ul className={`nw-option no-selection -down ${(
                     (isOpen) ? '' : '-hidden-opts'
