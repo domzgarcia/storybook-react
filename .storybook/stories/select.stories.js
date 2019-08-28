@@ -6,6 +6,12 @@ storiesOf('Select', module)
   .add('with placeholder', () => {
     return <Select placeholder={"Select Characters"}/>
   })
+  .add('with block', () => {
+    const data = [
+      {value: 'block', label: 'This is a block content.'},
+    ];
+    return <Select block data={data} />
+  })
   .add('with data', () => {
     let data = [
       {value: 'Domz Garcia', label: 'Domz Garcia'},

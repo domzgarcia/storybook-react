@@ -22,6 +22,7 @@ class Select extends Component {
             data: [],
             selectTagId: '',
             placeholder: '',
+            isBlock: false,
         };
         this.addWindowEvents    = this.addWindowEvents.bind(this);
         this.removeWindowEvents = this.removeWindowEvents.bind(this);
@@ -59,13 +60,14 @@ class Select extends Component {
     
     propsModifications(){
         if(_isSelectTagMounted){
-            const size = this.props.size || this.state.size;
+            const {data, placeholder, block, size} = this.props;
+            const _size = size || this.state.size;
             const elem = document.querySelector('.select-wrap .nw-option');
-            elem.style.maxHeight = (+size * 30) + 'px';
-            const data = this.props.data;
-            const placeholder = this.props.placeholder;
+            elem.style.maxHeight = (+_size * 30) + 'px';
+            
             if(data) this.setState({data: data});
             if(placeholder) this.setState({currLabel: placeholder,});
+            if(block) this.setState({isBlock: true})
         }
     }
 
@@ -95,11 +97,11 @@ class Select extends Component {
     }
     
     handleSelectOpener(e){
-        this.setState({
-            isOpen: !this.state.isOpen,
-        });
+        if(_isSelectTagMounted){
+            this.setState({ isOpen: !this.state.isOpen, });
+        }
     }
-
+    
     renderHybridTagOption(data){
         return data.map((opt, idx) => {
             return (
@@ -125,9 +127,9 @@ class Select extends Component {
     }
     
     render(){
-        const {isOpen, currLabel, data, currValue, selectTagId} = this.state;
+        const {isOpen, currLabel, data, currValue, selectTagId, isBlock} = this.state;
         return (
-            <div id={`blur-control-${selectTagId}`} className="select-wrap -switched"
+            <div id={`blur-control-${selectTagId}`} className={`select-wrap -switched ${((isBlock) ? '-block' : '' )}`}
                 onClick={this.handleSelectOpener} >
                 {/* INPUT_TAG */}
                 <input className="select-input -prevent-pointer disable-user-select" 
@@ -181,6 +183,7 @@ Select.propTypes = {
   disabled: PropTypes.bool,
   size: PropTypes.string,
   placeholder: PropTypes.string,
+  block: PropTypes.bool,
 }
 
 export default Select;
