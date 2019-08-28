@@ -17,8 +17,7 @@ class Select extends Component {
             isOpen: false,
             currLabel: 'Select',
             currValue: '',
-            // size
-            size: 6,
+            size: 6, // default size
             hasSelection: false,
             data: [],
             selectTagId: '',
@@ -37,12 +36,12 @@ class Select extends Component {
             selectTagId: generateId(),
         },
         () => {
-            const elem = document.querySelector(`#nw-select-tag-${this.state.selectTagId}`);
+            const elem  = document.querySelector(`#nw-select-tag-${this.state.selectTagId}`);
             _elemOffset = getOffset(elem);
             /* 
-            |---------------------
+            |-------------
             | Init Events
-            |---------------------
+            |-------------
             */
             const blurElemName = `#blur-control-${this.state.selectTagId}`;
             blurElem(blurElemName, (isInside) => {
@@ -59,13 +58,15 @@ class Select extends Component {
     }
     
     propsModifications(){
-        const size = this.props.size || this.state.size;
-        const elem = document.querySelector('.select-wrap .nw-option');
-        elem.style.maxHeight = (+size * 30) + 'px';
-        const data = this.props.data;
-        const placeholder = this.props.placeholder;
-        if(data) this.setState({data: data});
-        if(placeholder) this.setState({currLabel: placeholder,});
+        if(_isSelectTagMounted){
+            const size = this.props.size || this.state.size;
+            const elem = document.querySelector('.select-wrap .nw-option');
+            elem.style.maxHeight = (+size * 30) + 'px';
+            const data = this.props.data;
+            const placeholder = this.props.placeholder;
+            if(data) this.setState({data: data});
+            if(placeholder) this.setState({currLabel: placeholder,});
+        }
     }
 
     componentWillUnmount(){
@@ -99,7 +100,7 @@ class Select extends Component {
         });
     }
 
-    renderAdvanceOption(data){
+    renderHybridTagOption(data){
         return data.map((opt, idx) => {
             return (
                 <li key={idx}
@@ -117,7 +118,7 @@ class Select extends Component {
         });
     }
 
-    renderNormalOption(data){
+    renderSelectTagOption(data){
         return data.map((opt, idx) => {
             return (<option key={idx} value={opt.value}>{opt.label}</option>)
         })
@@ -127,34 +128,37 @@ class Select extends Component {
         const {isOpen, currLabel, data, currValue, selectTagId} = this.state;
         return (
             <div id={`blur-control-${selectTagId}`} className="select-wrap -switched"
-                onClick={this.handleSelectOpener}
-                >
-                <input className="select-input -prevent-pointer no-selection" 
+                onClick={this.handleSelectOpener} >
+                {/* INPUT_TAG */}
+                <input className="select-input -prevent-pointer disable-user-select" 
                 placeholder={currLabel} 
                 alt={currLabel}
                 />
-                
+                {/* SELECT_TAG */}
                 <select id={`nw-select-tag-${selectTagId}`} 
-                className="select-tag no-selection" 
+                className="select-tag disable-user-select" 
                 value={currValue}
-                >
-                    {this.renderNormalOption(data)}
+                onChange={()=>{ this.setState({currValue}); }} >
+                    {this.renderSelectTagOption(data)}
                 </select>
+                {/* HYBRID_TAG  -down || -up */}
+                <ul className={`nw-option disable-user-select -down ${(
+                    (isOpen) ? '' : '-hidden-opts'
+                )}`}>
+                    {this.renderHybridTagOption(data)}
+                </ul>
+                
                 {/* 
-                    Mocks Select Options Tag 
+                    8/28/2019
                     ------------------------
                     TODO: Option
                     TODO: OptionGroup
                     TODO: Normal select
                     TODO: Like Tag
                     TODO: Icon in Text
+                    TODO: Theming
                 */}
-                <ul className={`nw-option no-selection -down ${(
-                    (isOpen) ? '' : '-hidden-opts'
-                )}`}>
-                    {this.renderAdvanceOption(data)}
-                </ul>
-                
+
                 {/* SVG file from antDesign Icon */}
                 <svg viewBox="64 64 896 896" 
                 focusable="false" 

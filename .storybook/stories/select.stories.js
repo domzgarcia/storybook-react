@@ -14,7 +14,7 @@ storiesOf('Select', module)
       {value: 'Jeffrey Claude', label: 'Jeffrey Claude'},
       {value: 'Napoleon Nap', label: 'Napoleon Nap'},
     ];
-    return <Select data={data}/>
+    return (<Select data={data}/>)
   })
   .add('with attribute size', () => {
     let data = [
@@ -25,7 +25,7 @@ storiesOf('Select', module)
       {value: 'Australia', label: 'Australia'},
       {value: 'Singapore', label: 'Singapore'},
     ];
-    return <Select data={data} size="4" />
+    return (<Select data={data} size="4" />)
   })
   .add('with long text', () => {
     let data = [
@@ -34,7 +34,7 @@ storiesOf('Select', module)
       {value: 'Napoleon Nap', label: 'Napoleon Nap'},
       {value: 'longText', label: 'With very long text, might be 2 or 3 lines, this is to test if UI is able to comply with this example.'},
     ];
-    return <Select data={data} />
+    return (<Select data={data} />)
   })
   .add('with multiple instance', () => {
     let data1 = [
@@ -56,8 +56,17 @@ storiesOf('Select', module)
       </div>
     )
   })
-  .add('Dropdown up when below', () => (
-    <div style={{marginTop:'500px'}}>
-      <Select />
-    </div>
-));
+  .add('Dropdown up when below', () => {
+    let data = [
+      {value: 'Domz Garcia', label: 'Domz Garcia'},
+      {value: 'Ervinne Sodusta', label: 'Ervinne Sodusta'},
+      {value: 'Mark Rowi Dizon', label: 'Mark Rowi Dizon'},
+      {value: 'Jeffrey Claude', label: 'Jeffrey Claude'},
+      {value: 'Napoleon Nap', label: 'Napoleon Nap'},
+    ];
+    return (
+      <div style={{marginTop:'500px'}}>
+        <Select data={data} />
+      </div>
+    )
+  });
