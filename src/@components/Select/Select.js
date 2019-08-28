@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {getOffset, generateId, blurElem} from './helpers';
+import {getOffset, generateId, blurElem, clearElemListeners} from './helpers';
 import './select.scss';
 
 // global variable not included on states.
 let _isSelectTagMounted = false;
 let _last_known_scroll_position = 0;
-let _collisionY = 100;
+let _overPixels = 120;
 let _elemOffset = null;
+let _selectIsDown = true;
 
 class Select extends Component {
     
@@ -23,6 +24,7 @@ class Select extends Component {
             selectTagId: '',
             placeholder: '',
             isBlock: false,
+            isDown: true,
         };
         this.addWindowEvents    = this.addWindowEvents.bind(this);
         this.removeWindowEvents = this.removeWindowEvents.bind(this);
@@ -32,6 +34,7 @@ class Select extends Component {
 
     componentDidMount(){
         _isSelectTagMounted = true;
+        _selectIsDown = true;
 
         this.setState({
             selectTagId: generateId(),
@@ -46,7 +49,9 @@ class Select extends Component {
             */
             const blurElemName = `#blur-control-${this.state.selectTagId}`;
             blurElem(blurElemName, (isInside) => {
-                if( ! isInside) this.setState({isOpen: false});
+                if( isInside === false && _isSelectTagMounted === true) {
+                    this.setState({isOpen: false});
+                }
             });
             this.addWindowEvents();
             /* 
@@ -74,6 +79,7 @@ class Select extends Component {
     componentWillUnmount(){
         _isSelectTagMounted = false;
         this.removeWindowEvents();
+        clearElemListeners();
     }
 
     removeWindowEvents(){
@@ -88,7 +94,14 @@ class Select extends Component {
 
     onWindowScroll(evt){
         if( ! _isSelectTagMounted) return 0;
-        // console.log('scroll', evt);
+        _last_known_scroll_position = window.scrollY;
+        var offsetY = _elemOffset.top - _last_known_scroll_position;
+
+        const currY      = window.innerHeight- offsetY;
+        const heightOver = window.innerHeight + _overPixels;
+        // TODO: refine this;        
+        if(currY <  heightOver) _selectIsDown = false;
+        else _selectIsDown = true;
     }
 
     onWindowResize(evt){
@@ -101,7 +114,7 @@ class Select extends Component {
             this.setState({ isOpen: !this.state.isOpen, });
         }
     }
-    
+
     renderHybridTagOption(data){
         return data.map((opt, idx) => {
             return (
@@ -144,22 +157,23 @@ class Select extends Component {
                     {this.renderSelectTagOption(data)}
                 </select>
                 {/* HYBRID_TAG  -down || -up */}
-                <ul className={`nw-option disable-user-select -down ${(
-                    (isOpen) ? '' : '-hidden-opts'
-                )}`}>
+                <ul className={`nw-option disable-user-select 
+                   ${( (_selectIsDown) ? '-down': '-up' )}
+                   ${( (isOpen) ? '' : '-hidden-opts' )}
+                `}>
                     {this.renderHybridTagOption(data)}
                 </ul>
-                
-                {/* 
-                    8/28/2019
-                    ------------------------
-                    TODO: Option
-                    TODO: OptionGroup
-                    TODO: Normal select
-                    TODO: Like Tag
-                    TODO: Icon in Text
-                    TODO: Theming
-                */}
+
+                {/* {(_selectIsDown)?'TRUE':'FALSE'} */}
+
+                {/* 8/28/2019
+                -------------
+                TODO: Option
+                TODO: OptionGroup
+                TODO: Normal select
+                TODO: Like Tag
+                TODO: Icon in Text
+                TODO: Theming */}
 
                 {/* SVG file from antDesign Icon */}
                 <svg viewBox="64 64 896 896" 
