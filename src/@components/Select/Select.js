@@ -188,10 +188,10 @@ class Select extends Component {
                 onClick={this.handleSelectOpener} >
                 {/* INPUT_TAG */}
                 <input 
-                {...this.props}
-                className="select-input -prevent-pointer disable-user-select" 
-                placeholder={currLabel} 
-                alt={currLabel}
+                    {...this.props}
+                    className="select-input -prevent-pointer disable-user-select" 
+                    placeholder={currLabel} 
+                    alt={currLabel}
                 />
                 {/* SELECT_TAG */}
                 <select id={`nw-select-tag-${tagId}`} 
