@@ -54,7 +54,6 @@ class Select extends Component {
             tagId: generateId(),
         },
         () => {
-            // const elem  = document.querySelector(`#nw-select-tag-${this.state.tagId}`);
             this.setElemOffsetById(this.state.tagId);
             /*
             |-------------
@@ -88,7 +87,7 @@ class Select extends Component {
            this.cleanAttributes();
             /* 
             |---------------------
-            | Clean Mock Attributes
+            | ClassNames
             |---------------------
             */
            this.resolveClassNames();
