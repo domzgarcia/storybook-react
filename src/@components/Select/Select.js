@@ -243,7 +243,9 @@ class Select extends Component {
                 TODO: Normal select
                 TODO: Like Tag
                 TODO: Icon in Text
-                TODO: Theming */}
+                TODO: Theming 
+                TODO: ClassName, Style
+                */}
 
                 {/* SVG file from antDesign Icon */}
                 <svg viewBox="64 64 896 896" 
