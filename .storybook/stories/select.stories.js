@@ -12,12 +12,6 @@ storiesOf('Select', module)
     ];
     return <Select nullable data={data} />
   })
-  .add('with nullable and placeholder', () => {
-    const data = [
-      {value: 2, label: 'I should be a second choice.'},
-    ];
-    return <Select nullable placeholder={"Select Users"} data={data} />
-  })
   .add('with block', () => {
     const data = [
       {value: 'block', label: 'This is a block content.'},
@@ -91,7 +85,7 @@ storiesOf('Select', module)
       </div>
     )
   }, {info: "To check, open your inspect element debugger change windows height to mock the scrolling knob."})
-  .add('with logs that data is been received', () => {
+  .add('with logs of data received', () => {
     const data = [{value: "Domz Garcia", label: 'The creator'},];
     return (<Select 
       nullable 

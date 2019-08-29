@@ -95,7 +95,7 @@ class Select extends Component {
             if(nullable) this.setState({isNullable:true, currValue:""}, () => this.setSelectTagValue() );
         }
     }
-    
+
     componentWillUnmount () {
         _isSelectTagMounted = false;
         this.removeWindowEvents();
@@ -239,6 +239,7 @@ Select.propTypes = {
   block: PropTypes.bool,
   nullable: PropTypes.bool,
   data: PropTypes.array,
+  onChange: PropTypes.func,
 }
 
 export default Select;
