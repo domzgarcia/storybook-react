@@ -7,11 +7,7 @@ import './select.scss';
 let _isSelectTagMounted = false;
 let _elemOffset = null;
 let _selectIsDown = true;
-
-const setElemOffsetById = (id) => {
-    const elem  = document.querySelector(`#blur-control-${id}`);
-    _elemOffset = getOffset(elem);
-}
+const _DEFAULT_LABEL = 'Please select';
 
 class Select extends Component {
     
@@ -19,7 +15,7 @@ class Select extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            currLabel: 'Please select',
+            currLabel: _DEFAULT_LABEL,
             currValue: '',
             size: 6, // default size
             hasSelection: false,
@@ -32,6 +28,11 @@ class Select extends Component {
         };
         this.handleSelectOpener = this.handleSelectOpener.bind(this);
         this.setSelectTagValue = this.setSelectTagValue.bind(this);
+    }
+
+    setElemOffsetById (id) {
+        const elem  = document.querySelector(`#blur-control-${id}`);
+        _elemOffset = getOffset(elem);
     }
     
     setSelectTagValue(){
@@ -50,7 +51,7 @@ class Select extends Component {
         },
         () => {
             // const elem  = document.querySelector(`#nw-select-tag-${this.state.tagId}`);
-            setElemOffsetById(this.state.tagId);
+            this.setElemOffsetById(this.state.tagId);
             /*
             |-------------
             | Init Events
@@ -116,7 +117,7 @@ class Select extends Component {
         if( ! _isSelectTagMounted) return 0;
         // Reset
         // TODO: There's a glitch by which the scroll snap a bit.
-        setElemOffsetById(this.state.tagId);
+        this.setElemOffsetById(this.state.tagId);
         const offsetY      = _elemOffset.top - window.scrollY;
         const windowHeight = window.innerHeight;
         const offsetPixel  = 200;
@@ -128,7 +129,7 @@ class Select extends Component {
     onWindowResize (evt) {
         if( ! _isSelectTagMounted  && ! this.state.tagId ) return 0;
         // Reset
-        setElemOffsetById(this.state.tagId);
+        this.setElemOffsetById(this.state.tagId);
     }
     
     handleSelectOpener (e) {
@@ -141,7 +142,7 @@ class Select extends Component {
         if(this.state.isNullable){
             const adoptPlaceholder = (this.state.isNullable && this.state.placeholder.length) 
                 ? this.state.placeholder 
-                : 'Please select';
+                : _DEFAULT_LABEL;
             /* empty string as null or undefined */
             data = [{value: "", label: adoptPlaceholder }, ...data];
         }
@@ -169,7 +170,7 @@ class Select extends Component {
             )
         });
     }
-
+    
     renderSelectTagOption (data) {
         data = this.resolveNullableData(data);
         return data.map((opt, idx) => {
