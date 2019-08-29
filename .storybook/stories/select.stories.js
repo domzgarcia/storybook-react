@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Select } from '../../src/@components';
+import '../styles/global.css';
 
 storiesOf('Select', module)
   .add('with placeholder', () => {
@@ -91,8 +92,31 @@ storiesOf('Select', module)
       nullable 
       placeholder="Select user" 
       data={data}
-      onChange={(data)=> {
-        console.log('[data]', data);
+      onChange={(value)=> {
+        alert('[value]\n' + JSON.stringify(value, null, 4) );
       }} 
     />)
-  }, { info: "To check, open your inspect element debugger and go to console tab." });
+  })
+  .add('with style', () => {
+    let data = [
+      {value: 'Domz Garcia', label: 'Domz Garcia'},
+      {value: 'Ervinne Sodusta', label: 'Ervinne Sodusta'},
+      {value: 'Napoleon Nap', label: 'Napoleon Nap'},
+      {value: 'longText', label: 'With very long text, might be 2 or 3 lines, this is to test if UI is able to comply with this example.'},
+    ];
+    return (<Select style={{boxShadow: 'inset 3px 3px 5px 6px #eee'}} data={data} />)
+  })
+  .add('with className [TODO: Not working]', () => {
+    let data = [
+      {value: 'Domz Garcia', label: 'Domz Garcia'},
+      {value: 'Ervinne Sodusta', label: 'Ervinne Sodusta'},
+      {value: 'Napoleon Nap', label: 'Napoleon Nap'},
+      {value: 'longText', label: 'With very long text, might be 2 or 3 lines, this is to test if UI is able to comply with this example.'},
+    ];
+    return (<Select className={"red bordered"} data={data} 
+    onChange={(value)=> {
+      alert('[value]\n' + JSON.stringify(value, null, 4) );
+    }} 
+    />)
+  })
+  

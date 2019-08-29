@@ -27,7 +27,8 @@ class Select extends Component {
             isNullable: false,
         };
         this.handleSelectOpener = this.handleSelectOpener.bind(this);
-        this.setSelectTagValue = this.setSelectTagValue.bind(this);
+        this.onWindowResize = this.onWindowResize.bind(this);
+        this.onWindowScroll = this.onWindowScroll.bind(this);
     }
 
     setElemOffsetById (id) {
@@ -103,13 +104,13 @@ class Select extends Component {
     }
 
     removeWindowEvents () {
-        window.removeEventListener('resize', this.onWindowResize.bind(this));
-        window.removeEventListener('scroll', this.onWindowScroll.bind(this));
+        window.removeEventListener('resize', this.onWindowResize);
+        window.removeEventListener('scroll', this.onWindowScroll);
     }
 
     addWindowEvents () {
-        window.addEventListener('resize', this.onWindowResize.bind(this));
-        window.addEventListener('scroll', this.onWindowScroll.bind(this));
+        window.addEventListener('resize', this.onWindowResize);
+        window.addEventListener('scroll', this.onWindowScroll);
     }
 
     onWindowScroll () {
@@ -129,7 +130,7 @@ class Select extends Component {
         else _selectIsDown = true;
     }
 
-    onWindowResize (evt) {
+    onWindowResize () {
         if( ! _isSelectTagMounted  && ! this.state.tagId ) return 0;
         // Reset
         this.setElemOffsetById(this.state.tagId);
@@ -186,7 +187,9 @@ class Select extends Component {
             <div id={`blur-control-${tagId}`} className={`select-wrap -switched ${((isBlock) ? '-block' : '' )}`}
                 onClick={this.handleSelectOpener} >
                 {/* INPUT_TAG */}
-                <input className="select-input -prevent-pointer disable-user-select" 
+                <input 
+                {...this.props}
+                className="select-input -prevent-pointer disable-user-select" 
                 placeholder={currLabel} 
                 alt={currLabel}
                 />
@@ -216,7 +219,7 @@ class Select extends Component {
 
                 {/* SVG file from antDesign Icon */}
                 <svg viewBox="64 64 896 896" 
-                focusable="false" 
+                focusable="false"
                 className={`ant-arrow ${(
                     (isOpen) ? '-rotate' : ''
                 )}`}
