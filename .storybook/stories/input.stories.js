@@ -9,7 +9,7 @@ storiesOf('Input Text', module)
     // settings
     .addParameters({ options: { panelPosition: 'bottom' } })
 
-    .add('with placeholder', () => (
+    .add('with attribute placeholder', () => (
         <Input placeholder="Input your name" />
     ))
     .add('with attribute align', () => (
@@ -18,7 +18,7 @@ storiesOf('Input Text', module)
     .add('with custom class', () => (
         <Input className="red bordered" align="center" defaultValue="Domz Garcia" />
     ))
-    .add('with style object', () => (
+    .add('with attribute style object', () => (
         <Input style={{boxShadow: 'inset 3px 3px 5px 6px #eee'}} defaultValue="Domz Garcia" />
     ))
     .add('with attribute block', () => (

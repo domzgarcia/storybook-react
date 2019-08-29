@@ -86,7 +86,7 @@ storiesOf('Select', module)
       </div>
     )
   }, {info: "To check, open your inspect element debugger change windows height to mock the scrolling knob."})
-  .add('with logs of data received', () => {
+  .add('with attribute onChange, see alert value', () => {
     const data = [{value: "Domz Garcia", label: 'The creator'},];
     return (<Select 
       nullable 
@@ -97,7 +97,7 @@ storiesOf('Select', module)
       }} 
     />)
   })
-  .add('with style', () => {
+  .add('with attribute style object', () => {
     let data = [
       {value: 'Domz Garcia', label: 'Domz Garcia'},
       {value: 'Ervinne Sodusta', label: 'Ervinne Sodusta'},
