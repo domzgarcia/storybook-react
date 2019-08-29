@@ -90,7 +90,7 @@ storiesOf('Select', module)
         <Select data={data} />
       </div>
     )
-  }, {info: "To check, open your inspect element to reproduce the scroll knob."})
+  }, {info: "To check, open your inspect element debugger change windows height to mock the scrolling knob."})
   .add('with logs that data is been received', () => {
     const data = [{value: "Domz Garcia", label: 'The creator'},];
     return (<Select 
@@ -101,4 +101,4 @@ storiesOf('Select', module)
         console.log('[data]', data);
       }} 
     />)
-  });
+  }, { info: "To check, open your inspect element debugger and go to console tab." });

@@ -32,7 +32,9 @@ class Select extends Component {
 
     setElemOffsetById (id) {
         const elem  = document.querySelector(`#blur-control-${id}`);
-        _elemOffset = getOffset(elem);
+        if(elem) {
+            _elemOffset = getOffset(elem);
+        }
     }
     
     setSelectTagValue(){
@@ -82,6 +84,7 @@ class Select extends Component {
     propsModifications(){
         if(_isSelectTagMounted){
             const {data, placeholder, block, size, nullable} = this.props;
+
             const _size = size || this.state.size;
             const elem = document.querySelector('.select-wrap .nw-option');
             elem.style.maxHeight = (+_size * 30) + 'px';
@@ -232,7 +235,7 @@ class Select extends Component {
 
 Select.propTypes = {
   disabled: PropTypes.bool,
-  size: PropTypes.number,
+  size: PropTypes.string,
   placeholder: PropTypes.string,
   block: PropTypes.bool,
   nullable: PropTypes.bool,
