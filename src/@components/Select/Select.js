@@ -95,7 +95,7 @@ class Select extends Component {
             if(nullable) this.setState({isNullable:true, currValue:""}, () => this.setSelectTagValue() );
         }
     }
-
+    
     componentWillUnmount () {
         _isSelectTagMounted = false;
         this.removeWindowEvents();
@@ -146,8 +146,7 @@ class Select extends Component {
             const adoptPlaceholder = (this.state.isNullable && this.state.placeholder.length) 
                 ? this.state.placeholder 
                 : _DEFAULT_LABEL;
-            /* empty string as null or undefined */
-            data = [{value: "", label: adoptPlaceholder }, ...data];
+            data = [{value: null, label: adoptPlaceholder }, ...data];
         }
         return data;
     }
