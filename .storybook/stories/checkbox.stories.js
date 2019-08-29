@@ -32,3 +32,10 @@ storiesOf('Input checkbox', module)
         </div>
         </div>
     ))
+    .add('with attribute onChange, alert value', () => (
+        <Checkbox name="fullName"
+            onChange={(value)=>{
+                alert('[value]\n' + JSON.stringify(value, null, 4) );
+            }}
+        >Domz Garcia</Checkbox>
+    ))

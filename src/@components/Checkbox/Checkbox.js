@@ -15,46 +15,52 @@ class Checkbox extends Component {
             colorType: 'primary',
             customProps: {},
         };
-
-        this.cleanAttributes = this.cleanAttributes.bind(this);
-        this.setDefault = this.setDefault.bind(this);
-        this.resolveType = this.resolveType.bind(this);
         this.handleChecked = this.handleChecked.bind(this);
     }
+
+    setCheckboxTagValue () {
+        if(this.props && this.props.onChange) {
+            const value = this.state.isChecked;   
+            this.props.onChange(value);
+        }
+    }
     
-    
-    componentDidMount(){
+    componentDidMount () {
         this.resolveType();
         this.setDefault();
         this.cleanAttributes();
     }
     
-    cleanAttributes() {
+    cleanAttributes () {
         const properties = Object.assign({}, this.props);
         delete properties.children;
         delete properties.checked;
         delete properties.disabled;
+        delete properties.onChange;
         this.setState({customProps: properties});
     }
 
-    setDefault() {
+    setDefault () {
         const {checked, disabled} = this.props;
         if(checked) this.setState({isChecked: checked});
         if(disabled) this.setState({isDisabled: disabled});
     }
 
-    resolveType() {
+    resolveType () {
         const {type} = this.props;
         if(type) this.setState({colorType: type});
     }
 
-    handleChecked() {
+    handleChecked () {
         this.setState({
             isChecked: !this.state.isChecked,
+        },
+        () => {
+            this.setCheckboxTagValue(this.state.isChecked);
         });
     }
 
-    render(){
+    render () {
         const {isChecked, colorType, customProps, isDisabled} = this.state;
         const {children} = this.props;
         const empty = '';
@@ -87,6 +93,7 @@ class Checkbox extends Component {
     type: PropTypes.string,
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
+    onChange: PropTypes.func,
 };
 
 export default Checkbox;

@@ -25,6 +25,7 @@ class Select extends Component {
             isBlock: false,
             isDown: true,
             isNullable: false,
+            customProps: {},
         };
         this.handleSelectOpener = this.handleSelectOpener.bind(this);
         this.onWindowResize = this.onWindowResize.bind(this);
@@ -79,9 +80,28 @@ class Select extends Component {
             |---------------------
             */
             this.calcHitBounds();
+
+            /* 
+            |---------------------
+            | Clean Mock Attributes
+            |---------------------
+            */
+           this.cleanAttributes();
         });
     }
     
+    cleanAttributes () {
+        const properties = Object.assign({}, this.props);
+        delete properties.disabled;
+        delete properties.size;
+        delete properties.placeholder;
+        delete properties.block;
+        delete properties.data;
+        delete properties.nullable;
+        delete properties.onChange;
+        this.setState({customProps: properties});
+    }
+
     propsModifications(){
         if(_isSelectTagMounted){
             const {data, placeholder, block, size, nullable} = this.props;
@@ -182,13 +202,13 @@ class Select extends Component {
     }
     
     render () {
-        const {isOpen, currLabel, data, currValue, tagId, isBlock} = this.state;
+        const {isOpen, currLabel, data, currValue, tagId, isBlock, customProps} = this.state;
         return (
             <div id={`blur-control-${tagId}`} className={`select-wrap -switched ${((isBlock) ? '-block' : '' )}`}
                 onClick={this.handleSelectOpener} >
                 {/* INPUT_TAG */}
                 <input 
-                    {...this.props}
+                    {...customProps}
                     className="select-input -prevent-pointer disable-user-select" 
                     placeholder={currLabel} 
                     alt={currLabel}
