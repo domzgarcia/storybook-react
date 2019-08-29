@@ -106,6 +106,7 @@ storiesOf('Select', module)
     ];
     return (<Select style={{boxShadow: 'inset 3px 3px 5px 6px #eee'}} data={data} />)
   })
+  /*
   .add('with className [TODO: Not working]', () => {
     let data = [
       {value: 'Domz Garcia', label: 'Domz Garcia'},
@@ -118,5 +119,5 @@ storiesOf('Select', module)
       alert('[value]\n' + JSON.stringify(value, null, 4) );
     }} 
     />)
-  })
+  })*/
   

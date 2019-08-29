@@ -80,13 +80,18 @@ class Select extends Component {
             |---------------------
             */
             this.calcHitBounds();
-
             /* 
             |---------------------
             | Clean Mock Attributes
             |---------------------
             */
            this.cleanAttributes();
+            /* 
+            |---------------------
+            | Clean Mock Attributes
+            |---------------------
+            */
+           this.resolveClassNames();
         });
     }
     
@@ -102,7 +107,11 @@ class Select extends Component {
         this.setState({customProps: properties});
     }
 
-    propsModifications(){
+    resolveClassNames () {
+        // TODO: className Merging here
+    }
+
+    propsModifications () {
         if(_isSelectTagMounted){
             const {data, placeholder, block, size, nullable} = this.props;
 
@@ -162,7 +171,7 @@ class Select extends Component {
         }
     }
     
-    resolveNullableData(data){
+    resolveNullableData (data) {
         if(this.state.isNullable){
             const adoptPlaceholder = (this.state.isNullable && this.state.placeholder.length) 
                 ? this.state.placeholder 
