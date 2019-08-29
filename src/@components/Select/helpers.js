@@ -7,6 +7,7 @@ const getOffset = (el) => {
     scrollTop  = window.pageYOffset || document.documentElement.scrollTop;
     return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
 };
+
 const generateId = () => { return (Math.floor(Math.random()*9999) + 1) + '-' + (Math.floor(Math.random()*9999) + 1); };
 
 const documentClick = (evt) => {
@@ -14,7 +15,7 @@ const documentClick = (evt) => {
     let targetElement = evt.target;
     let isInside = false;
     do {
-        if (targetElement == flyoutElement) {
+        if (targetElement === flyoutElement) {
             isInside = true;
             globalCallback(isInside);
             return;
@@ -22,9 +23,9 @@ const documentClick = (evt) => {
         targetElement = targetElement.parentNode;
     } while (targetElement);
     globalCallback(isInside);
-}
+};
 
-const blurElem = (name, cb) => {
+const addBlurElem = (name, cb) => {
     globalName = name;
     globalCallback = cb;
     // sanitize if has id=#
@@ -34,13 +35,13 @@ const blurElem = (name, cb) => {
     document.addEventListener("click", documentClick);
 };
 
-const clearElemListeners = () => {
+const removeBlurElem = () => {
     document.removeEventListener("click", documentClick);
-}
+};
 
 export {
     getOffset,
     generateId,
-    blurElem,
-    clearElemListeners,
+    addBlurElem,
+    removeBlurElem,
 };

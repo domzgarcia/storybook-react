@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {getOffset, generateId, blurElem, clearElemListeners} from './helpers';
+import {getOffset, generateId, addBlurElem, removeBlurElem} from './helpers';
 import './select.scss';
 
 // global variable not included on states.
 let _isSelectTagMounted = false;
-let _last_known_scroll_position = 0;
-let _overPixels = 120;
 let _elemOffset = null;
 let _selectIsDown = true;
+
+const setElemOffsetById = (id) => {
+    const elem  = document.querySelector(`#blur-control-${id}`);
+    _elemOffset = getOffset(elem);
+}
 
 class Select extends Component {
     
@@ -16,39 +19,45 @@ class Select extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            currLabel: 'Select',
+            currLabel: 'Please select',
             currValue: '',
             size: 6, // default size
             hasSelection: false,
             data: [],
-            selectTagId: '',
+            tagId: 0,
             placeholder: '',
             isBlock: false,
             isDown: true,
+            isNullable: false,
         };
-        this.addWindowEvents    = this.addWindowEvents.bind(this);
-        this.removeWindowEvents = this.removeWindowEvents.bind(this);
         this.handleSelectOpener = this.handleSelectOpener.bind(this);
-        this.propsModifications = this.propsModifications.bind(this);
+        this.setSelectTagValue = this.setSelectTagValue.bind(this);
     }
-
+    
+    setSelectTagValue(){
+        if(this.props && this.props.onChange) {
+            const value = {value: this.state.currValue, label: this.state.currLabel }   
+            this.props.onChange(value);
+        }
+    }
+    
     componentDidMount(){
         _isSelectTagMounted = true;
         _selectIsDown = true;
 
         this.setState({
-            selectTagId: generateId(),
+            tagId: generateId(),
         },
         () => {
-            const elem  = document.querySelector(`#nw-select-tag-${this.state.selectTagId}`);
-            _elemOffset = getOffset(elem);
-            /* 
+            // const elem  = document.querySelector(`#nw-select-tag-${this.state.tagId}`);
+            setElemOffsetById(this.state.tagId);
+            /*
             |-------------
             | Init Events
             |-------------
             */
-            const blurElemName = `#blur-control-${this.state.selectTagId}`;
-            blurElem(blurElemName, (isInside) => {
+            addBlurElem(`#blur-control-${this.state.tagId}`, 
+                isInside => {
                 if( isInside === false && _isSelectTagMounted === true) {
                     this.setState({isOpen: false});
                 }
@@ -60,89 +69,118 @@ class Select extends Component {
             |---------------------
             */
             this.propsModifications();
+            /* 
+            |---------------------
+            | Auto-trigger funct
+            |---------------------
+            */
+            this.calcHitBounds();
         });
     }
     
     propsModifications(){
         if(_isSelectTagMounted){
-            const {data, placeholder, block, size} = this.props;
+            const {data, placeholder, block, size, nullable} = this.props;
             const _size = size || this.state.size;
             const elem = document.querySelector('.select-wrap .nw-option');
             elem.style.maxHeight = (+_size * 30) + 'px';
             
-            if(data) this.setState({data: data});
-            if(placeholder) this.setState({currLabel: placeholder,});
-            if(block) this.setState({isBlock: true})
+            if( data && data.length) this.setState({data: data});
+            if( placeholder && placeholder.length) this.setState({currLabel: placeholder, placeholder: placeholder});
+            if(block) this.setState({isBlock: true});
+            if(nullable) this.setState({isNullable:true, currValue:""}, () => this.setSelectTagValue() );
         }
     }
 
-    componentWillUnmount(){
+    componentWillUnmount () {
         _isSelectTagMounted = false;
         this.removeWindowEvents();
-        clearElemListeners();
+        removeBlurElem();
     }
 
-    removeWindowEvents(){
-        window.removeEventListener('resize', this.onWindowResize);
-        window.removeEventListener('scroll', this.onWindowScroll);
+    removeWindowEvents () {
+        window.removeEventListener('resize', this.onWindowResize.bind(this));
+        window.removeEventListener('scroll', this.onWindowScroll.bind(this));
     }
 
-    addWindowEvents(){
-        window.addEventListener('resize', this.onWindowResize);
-        window.addEventListener('scroll', this.onWindowScroll);
+    addWindowEvents () {
+        window.addEventListener('resize', this.onWindowResize.bind(this));
+        window.addEventListener('scroll', this.onWindowScroll.bind(this));
     }
 
-    onWindowScroll(evt){
+    onWindowScroll () {
+        this.calcHitBounds();
+    }
+
+    calcHitBounds () {
         if( ! _isSelectTagMounted) return 0;
-        _last_known_scroll_position = window.scrollY;
-        var offsetY = _elemOffset.top - _last_known_scroll_position;
+        // Reset
+        // TODO: There's a glitch by which the scroll snap a bit.
+        setElemOffsetById(this.state.tagId);
+        const offsetY      = _elemOffset.top - window.scrollY;
+        const windowHeight = window.innerHeight;
+        const offsetPixel  = 200;
 
-        const currY      = window.innerHeight- offsetY;
-        const heightOver = window.innerHeight + _overPixels;
-        // TODO: refine this;        
-        if(currY <  heightOver) _selectIsDown = false;
+        if(offsetY > (windowHeight - offsetPixel)) _selectIsDown = false;
         else _selectIsDown = true;
     }
 
-    onWindowResize(evt){
-        if( ! _isSelectTagMounted) return 0;
-        // console.log('resize', evt);
+    onWindowResize (evt) {
+        if( ! _isSelectTagMounted  && ! this.state.tagId ) return 0;
+        // Reset
+        setElemOffsetById(this.state.tagId);
     }
     
-    handleSelectOpener(e){
+    handleSelectOpener (e) {
         if(_isSelectTagMounted){
             this.setState({ isOpen: !this.state.isOpen, });
         }
     }
+    
+    resolveNullableData(data){
+        if(this.state.isNullable){
+            const adoptPlaceholder = (this.state.isNullable && this.state.placeholder.length) 
+                ? this.state.placeholder 
+                : 'Please select';
+            /* empty string as null or undefined */
+            data = [{value: "", label: adoptPlaceholder }, ...data];
+        }
+        return data;
+    }
 
-    renderHybridTagOption(data){
+    renderHybridTagOption (data) {
+        data = this.resolveNullableData(data);
         return data.map((opt, idx) => {
             return (
                 <li key={idx}
                 data-value={opt.value}
-                className={((this.state.currValue===opt.value)?'-active':'')} 
+                className={((this.state.currValue===opt.value) ? '-active' : '' )} 
                 onClick={(e)=> {
                     const value = e.target.dataset.value;
                     const label = e.target.innerText;
                     this.setState({
                         currLabel: label,
                         currValue: value,
+                    },
+                    () => {
+                        this.setSelectTagValue();
                     });
                 }} >{opt.label}</li>
             )
         });
     }
 
-    renderSelectTagOption(data){
+    renderSelectTagOption (data) {
+        data = this.resolveNullableData(data);
         return data.map((opt, idx) => {
             return (<option key={idx} value={opt.value}>{opt.label}</option>)
         })
     }
     
-    render(){
-        const {isOpen, currLabel, data, currValue, selectTagId, isBlock} = this.state;
+    render () {
+        const {isOpen, currLabel, data, currValue, tagId, isBlock} = this.state;
         return (
-            <div id={`blur-control-${selectTagId}`} className={`select-wrap -switched ${((isBlock) ? '-block' : '' )}`}
+            <div id={`blur-control-${tagId}`} className={`select-wrap -switched ${((isBlock) ? '-block' : '' )}`}
                 onClick={this.handleSelectOpener} >
                 {/* INPUT_TAG */}
                 <input className="select-input -prevent-pointer disable-user-select" 
@@ -150,7 +188,7 @@ class Select extends Component {
                 alt={currLabel}
                 />
                 {/* SELECT_TAG */}
-                <select id={`nw-select-tag-${selectTagId}`} 
+                <select id={`nw-select-tag-${tagId}`} 
                 className="select-tag disable-user-select" 
                 value={currValue}
                 onChange={()=>{ this.setState({currValue}); }} >
@@ -163,8 +201,6 @@ class Select extends Component {
                 `}>
                     {this.renderHybridTagOption(data)}
                 </ul>
-
-                {/* {(_selectIsDown)?'TRUE':'FALSE'} */}
 
                 {/* 8/28/2019
                 -------------
@@ -195,9 +231,11 @@ class Select extends Component {
 
 Select.propTypes = {
   disabled: PropTypes.bool,
-  size: PropTypes.string,
+  size: PropTypes.number,
   placeholder: PropTypes.string,
   block: PropTypes.bool,
+  nullable: PropTypes.bool,
+  data: PropTypes.array,
 }
 
 export default Select;
