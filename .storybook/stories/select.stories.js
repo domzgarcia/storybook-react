@@ -88,10 +88,11 @@ storiesOf('Select', module)
     const data = [{value: "Domz Garcia", label: 'The creator'},];
     return (<Select 
       nullable 
-      placeholder="Select user" 
+      placeholder="Select Custom Users"
       data={data}
       onChange={(value)=> {
-        alert('[value]\n' + JSON.stringify(value, null, 4) );
+        console.log(value);
+        // alert('[value]\n' + JSON.stringify(value, null, 4) );
       }} 
     />)
   })

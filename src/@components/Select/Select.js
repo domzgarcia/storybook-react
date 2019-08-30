@@ -21,7 +21,7 @@ class Select extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isOpen: false, currLabel: _DEFAULT_LABEL, currValue: '',
+            isOpen: false, currLabel: _DEFAULT_LABEL, currValue: undefined,
             size: 6, /* default size */ hasSelection: false,
             data: [], tagId: 0, placeholder: '', isBlock: false,
             isDown: true, isNullable: false, type: 'primary',
@@ -97,7 +97,7 @@ class Select extends Component {
             if( data && data.length ) this.setState({data: data});
             if( placeholder && placeholder.length ) this.setState({currLabel: placeholder, placeholder: placeholder});
             if( block ) this.setState({isBlock: true});
-            if( nullable ) this.setState({isNullable:true, currValue:""}, () => this.setSelectTagValue()/** autoset */);
+            if( nullable ) this.setState({isNullable:true, currValue: undefined }, () => this.setSelectTagValue()/** autoset */);
             if( type && type.length ) this.setState({type});
         }
     }
