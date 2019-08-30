@@ -1,0 +1,98 @@
+
+$primary-color: #007bff;
+$warning-color: #ffc107;
+$success-color: #28a745;
+$danger-color: #dc3545;
+
+/*|-------------------
+  | Primary State
+  |-------------------*/
+div[id*=select-control-].-primary:hover {
+    border: 1px solid $primary-color;
+}
+div[id*=select-control-].-primary.-with-border-focus {
+    border: 1px solid $primary-color;
+}
+div[id*=select-control-].-primary {
+    transition: 0.3s linear;
+    .-with-focus {
+        max-width: 100%;
+        width: 100%;
+        border-color: $primary-color;
+        border-right-width: 1px !important;
+        outline: 0;
+        display: inline-block;
+        -webkit-box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+        box-shadow: 0 0 0 3px rgba(0,123,255,0.2);
+        border-radius: 2px;
+    }
+}
+/*|-------------------
+  | Warning State
+  |-------------------*/
+  div[id*=select-control-].-warning:hover {
+    border: 1px solid $warning-color;
+}
+div[id*=select-control-].-warning.-with-border-focus {
+    border: 1px solid $warning-color;
+}
+div[id*=select-control-].-warning {
+    transition: 0.3s linear;
+    .-with-focus {
+        max-width: 100%;
+        width: 100%;
+        border-color: $warning-color;
+        border-right-width: 1px !important;
+        outline: 0;
+        display: inline-block;
+        -webkit-box-shadow: 0 0 0 2px rgba(255,193,7,0.2);
+        box-shadow: 0 0 0 3px rgba(255,193,7,0.2);
+        border-radius: 2px;
+    }
+}
+/*|-------------------
+  | Success State
+  |-------------------*/
+  div[id*=select-control-].-success:hover {
+    border: 1px solid $success-color;
+}
+div[id*=select-control-].-success.-with-border-focus {
+    border: 1px solid $success-color;
+}
+div[id*=select-control-].-success {
+    transition: 0.3s linear;
+    .-with-focus {
+        max-width: 100%;
+        width: 100%;
+        border-color: $success-color;
+        border-right-width: 1px !important;
+        outline: 0;
+        display: inline-block;
+        -webkit-box-shadow: 0 0 0 2px rgba(40,167,69,0.2);
+        box-shadow: 0 0 0 3px rgba(40,167,69,0.2);
+        border-radius: 2px;
+    }
+}
+/*|-------------------
+  | Danger State
+  |-------------------*/
+  div[id*=select-control-].-danger:hover {
+    border: 1px solid $danger-color;
+}
+div[id*=select-control-].-danger.-with-border-focus {
+    border: 1px solid $danger-color;
+}
+div[id*=select-control-].-danger {
+    transition: 0.3s linear;
+    .-with-focus {
+        max-width: 100%;
+        width: 100%;
+        border-color: $danger-color;
+        border-right-width: 1px !important;
+        outline: 0;
+        display: inline-block;
+        -webkit-box-shadow: 0 0 0 2px rgba(220,53,69,0.2);
+        box-shadow: 0 0 0 3px rgba(220,53,69,0.2);
+        border-radius: 2px;
+    }
+}

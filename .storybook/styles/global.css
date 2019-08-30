@@ -1,6 +1,11 @@
 body { font-family: Arial, Helvetica, sans-serif; }
 .red { color: red; }
-.bordered { border: 3px dashed red; }
+.violet { color: violet; }
+.bordered { border: 1px solid red; }
+.bg { background-color: violet; }
+.align-right { text-align: right; } 
+.align-center { text-align: center; } 
+    
 .nw-label {
     position: relative;
     height: 100%;

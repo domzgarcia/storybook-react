@@ -13,6 +13,23 @@ storiesOf('Select', module)
     ];
     return <Select nullable data={data} />
   })
+  .add('with attribute type', () => {
+    const data = [ 
+      {value: 1, label: 'warning'},
+      {value: 2, label: 'danger'},
+      {value: 3, label: 'success'},
+      {value: 4, label: 'primary'}, 
+    ];
+    return (
+      <div>
+        <Select type="primary" data={data} placeholder={"Select Characters"}/>
+        &nbsp;<Select type="warning" data={data} placeholder={"Select Characters"}/>
+        &nbsp;<Select type="success" data={data} placeholder={"Select Characters"}/>
+        &nbsp;<Select type="danger" data={data} placeholder={"Select Characters"}
+          onChange={(value)=>{console.log('[value]', value)}}
+        />
+      </div>)
+  })
   .add('with block', () => {
     const data = [
       {value: 'block', label: 'This is a block content.'},
@@ -102,22 +119,19 @@ storiesOf('Select', module)
       {value: 'Domz Garcia', label: 'Domz Garcia'},
       {value: 'Ervinne Sodusta', label: 'Ervinne Sodusta'},
       {value: 'Napoleon Nap', label: 'Napoleon Nap'},
-      {value: 'longText', label: 'With very long text, might be 2 or 3 lines, this is to test if UI is able to comply with this example.'},
     ];
-    return (<Select style={{boxShadow: 'inset 3px 3px 5px 6px #eee'}} data={data} />)
+    return (<Select style={{ boxShadow: 'inset 3px 3px 5px 6px #eee'}} data={data} />)
   })
-  /*
-  .add('with className [TODO: Not working]', () => {
+  .add('with className', () => {
     let data = [
       {value: 'Domz Garcia', label: 'Domz Garcia'},
       {value: 'Ervinne Sodusta', label: 'Ervinne Sodusta'},
       {value: 'Napoleon Nap', label: 'Napoleon Nap'},
-      {value: 'longText', label: 'With very long text, might be 2 or 3 lines, this is to test if UI is able to comply with this example.'},
     ];
-    return (<Select className={"red bordered"} data={data} 
-    onChange={(value)=> {
-      alert('[value]\n' + JSON.stringify(value, null, 4) );
-    }} 
-    />)
-  })*/
+    return (
+      <div>
+        <Select className={"violet align-center bordered"} data={data} />
+      </div>
+    )
+  })
   
