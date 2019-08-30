@@ -100,7 +100,6 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    /* do nothing for now */
 }
 /* 
 |---------------------
@@ -120,14 +119,9 @@
     border-bottom-right-radius: 4px;
     position: absolute;
     z-index: 10;
-    // @beta
-    // display: flex;
-    // justify-content: center;
-    // flex-direction:column;
     box-shadow: 3px 3px 5px -1px #ddd;
-    max-height: 6 * 30px; // by default size: 5;
+    max-height: 6 * 30px;
     overflow-y: auto;
-
     > li {
         box-sizing: border-box;
         padding: 7px 11px;
@@ -203,7 +197,7 @@
 }
 /* 
 |---------------------
-| Advabce modification
+| Advance modification
 |---------------------*/
 .select-wrap select::-ms-expand { display: none;}
 .select-wrap select {
