@@ -241,7 +241,7 @@ class Select extends Component {
                     <div
                         className={`div-label 
                         -prevent-pointer -disable-user-select`}>
-                        {currLabel}
+                        <div>{currLabel}</div>
                     </div>
                 </span>
                 

@@ -33,6 +33,7 @@ storiesOf('Select', module)
   .add('with block', () => {
     const data = [
       {value: 'block', label: 'This is a block content.'},
+      {value: 'longText', label: 'With very long text, might be 2 or 3 lines, this is to test if UI is able to comply with this example.'},
     ];
     return <Select block data={data} />
   })
@@ -65,26 +66,6 @@ storiesOf('Select', module)
       {value: 'longText', label: 'With very long text, might be 2 or 3 lines, this is to test if UI is able to comply with this example.'},
     ];
     return (<Select data={data} />)
-  })
-  .add('with multiple instance', () => {
-    let data1 = [
-      {value: 'Domz Garcia', label: 'Domz Garcia'},
-    ];
-    let data2 = [
-      {value: 'Jeffrey Mabazza', label: 'Jeffrey Mabazza'},
-    ];
-    let data3 = [
-      {value: 'Ervinne Sodusta', label: 'Ervinne Sodusta'},
-    ];
-    return (
-      <div>
-        <Select data={data1} />
-        <br /><br />
-        <Select data={data2} />
-        <br /><br />
-        <Select data={data3} />
-      </div>
-    )
   })
   .add('with auto detect up/down list.', () => {
     let data = [

@@ -12,7 +12,7 @@
     border-radius: 4px;
     background: #fff;
     text-align: left;
-    width: 250px;
+    width: 200px;
     height: 32px; // only
     max-width: 100%;
 
@@ -68,6 +68,8 @@
 .select-wrap .select-input,
 .select-wrap .div-label {
     padding-right: 30px + $offset !important;
+}
+.select-wrap .div-label > div {
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
