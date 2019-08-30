@@ -97,7 +97,7 @@ class Select extends Component {
             if( data && data.length ) this.setState({data: data});
             if( placeholder && placeholder.length ) this.setState({currLabel: placeholder, placeholder: placeholder});
             if( block ) this.setState({isBlock: true});
-            if( nullable ) this.setState({isNullable:true, currValue:""}, () => this.setSelectTagValue() );
+            if( nullable ) this.setState({isNullable:true, currValue:""}, () => this.setSelectTagValue()/** autoset */);
             if( type && type.length ) this.setState({type});
         }
     }
